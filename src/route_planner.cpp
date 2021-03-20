@@ -40,7 +40,6 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         {
             neighbor->parent = current_node;
             neighbor->g_value = current_node->g_value + neighbor->distance(*current_node);
-            // std::cout<<"Neghbor g_value ="<<neighbor->g_value<<'\n';
             neighbor->h_value = CalculateHValue(neighbor);
             open_list.emplace_back(neighbor);
             neighbor->visited = true;
@@ -62,9 +61,6 @@ RouteModel::Node *RoutePlanner::NextNode() {
     std::sort(open_list.begin(), open_list.end(),[](const auto _1st, const auto _2nd){
         return (_1st->g_value + _1st->h_value) < (_2nd->g_value + _2nd->h_value); 
     });
-
-    std::cout<<"First node sum = " << open_list[0]->g_value + open_list[0]->g_value << '\n';
-    std::cout<<"Last node sum = " << open_list[open_list.size() -1]->g_value + open_list[open_list.size() -1]->g_value << '\n';
 
     lowestCostNextNode = open_list[0];
     open_list.erase(open_list.begin());
