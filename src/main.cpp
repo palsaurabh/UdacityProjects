@@ -9,6 +9,8 @@
 #include "route_planner.h"
 
 using namespace std::experimental;
+using std::cin;
+using std::cout;
 
 static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
 {   
@@ -55,12 +57,32 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
+    float start_x, start_y, end_x, end_y;
+    cout<<"Enter the values between 0 and 100."<<'\n';
+    cout<<"Enter start_x"<<'\n';
+    cin>>start_x;
+    if(start_x < 0 || start_x > 100)
+        return EXIT_FAILURE;
+    cout<<"Enter start_y"<<'\n';
 
+    cin>>start_y;
+    if(start_y < 0 || start_y > 100)
+        return EXIT_FAILURE;
+    
+    cout<<"Enter end_x"<<'\n';
+    cin>>end_x;
+    if(end_x < 0 || end_x > 100)
+        return EXIT_FAILURE;
+    
+    cout<<"Enter end_y"<<'\n';
+    cin>>end_y;
+    if(end_y < 0 || end_y > 100)
+        return EXIT_FAILURE;
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
     route_planner.AStarSearch();
 
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
